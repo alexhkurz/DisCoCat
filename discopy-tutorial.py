@@ -99,6 +99,9 @@ for x in [white, yolk]:
 ## Tensor as boxes
 ## Tensor as boxes
 
+from discopy.tensor import Cup, Cap, Id # tensor.Id is different from symmetric.Id (!!)
+from discopy import tensor
+
 matrix = Tensor([0, 1, 1, 0], Dim(2), Dim(2))
 matrix.array
 
@@ -145,9 +148,19 @@ assert cap @ _id >> _id @ cup == _id == _id @ cap >> cup @ _id
 
 print("\n    == ".join(map(str, (cap @ _id >> _id @ cup, _id, _id @ cap >> cup @ _id))))
 
-from discopy.tensor import Cup, Cap, Id
-
 left_snake = Cap(Dim(2), Dim(2)) @ Id(Dim(2)) >> Id(Dim(2)) @ Cup(Dim(2), Dim(2))
 right_snake = Id(Dim(2)) @ Cap(Dim(2), Dim(2)) >> Cup(Dim(2), Dim(2)) @ Id(Dim(2))
 
 Equation(left_snake, Id(Dim(2)), right_snake).draw(figsize=(5, 2), draw_type_labels=False)
+
+_eval = tensor.Functor(
+    ob=lambda x: x,
+    ar=lambda f: f)
+assert _eval(left_snake) == _eval(Id(Dim(2))) == _eval(right_snake)
+
+f = tensor.Box("f", Dim(2), Dim(2), data=[1, 2, 3, 4])
+Equation(f.transpose(), f.r).draw(figsize=(3, 2), draw_type_labels=False)
+assert f.r.eval() == f.transpose().eval()
+print(f.r.eval())
+
+%timeit f.transpose().transpose().eval()
