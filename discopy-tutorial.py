@@ -163,4 +163,4 @@ Equation(f.transpose(), f.r).draw(figsize=(3, 2), draw_type_labels=False)
 assert f.r.eval() == f.transpose().eval()
 print(f.r.eval())
 
-%timeit f.transpose().transpose().eval()
+# %timeit f.transpose().transpose().eval()
