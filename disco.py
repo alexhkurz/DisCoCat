@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/path/to/discopy')
+sys.path.append('/actual/path/to/discopy')
 
 try:
     from discopy import Ty, Word, Cup, Cap, Diagram, Id, Functor
