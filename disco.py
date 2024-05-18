@@ -39,7 +39,7 @@ answer = Alice
 assert F(question) == F(answer)
 Equation(question, answer).draw(figsize=(6, 3))
 
-from discopy.quantum import circuit, qubit, sqrt, X
+from discopy.quantum import circuit, qubit, sqrt, X, Ket
 F_ = circuit.Functor(
     ob={s: qubit ** 0, n: qubit ** 1},
     ar={Alice: Ket(0),
