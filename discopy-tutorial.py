@@ -2,6 +2,7 @@
 
 from discopy.symmetric import Ty, Box, Id, Swap, Diagram, Functor
 from discopy.drawing import Equation
+from discopy.tensor import Dim, Tensor
 
 ## Drawing cooking recipes
 
@@ -89,9 +90,15 @@ english2french(open_crack2(crack2_then_beat)).draw(figsize=(4, 4))
 
 ## Tensor as boxes
 
-from discopy.tensor import Dim, Tensor
-
 matrix = Tensor([0, 1, 1, 0], Dim(2), Dim(2))
 
+print(matrix)
+
 matrix.array
+
+assert matrix >> Tensor.id(Dim(2)) == matrix == Tensor.id(Dim(2)) >> matrix
+
+vector = Tensor([0, 1], Dim(1), Dim(2))
+
+vector >> matrix
 
