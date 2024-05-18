@@ -15,14 +15,14 @@ assert egg @ Ty() == egg == Ty() @ egg               # unitality
 
 crack = Box(name='crack', dom=egg, cod=white @ yolk)
 
-crack.draw(figsize=(2, 2))
+# crack.draw(figsize=(2, 2))
 
 mix = Box('mix', white @ yolk, egg)
 
 crack_tensor_mix = crack @ mix
 crack_then_mix = crack >> mix
 
-Equation(crack_tensor_mix, crack_then_mix, symbol=' and ').draw(space=2, figsize=(8, 2))
+# Equation(crack_tensor_mix, crack_then_mix, symbol=' and ').draw(space=2, figsize=(8, 2))
 
 assert crack >> Id(white @ yolk) == crack == Id(egg) >> crack
 assert crack @ Id() == crack == Id() @ crack
@@ -35,7 +35,7 @@ beat = Box('beat', yolk @ sugar, yolky_paste)
 
 crack_then_beat = crack @ sugar >> white @ beat
 
-crack_then_beat.draw(figsize=(3, 2))
+# crack_then_beat.draw(figsize=(3, 2))
 
 merge = lambda x: Box('merge', x @ x, x)
 
@@ -43,7 +43,7 @@ crack_two_eggs = crack @ crack\
     >> white @ Swap(yolk, white) @ yolk\
     >> merge(white) @ merge(yolk)
 
-crack_two_eggs.draw(figsize=(3, 4))
+# crack_two_eggs.draw(figsize=(3, 4))
 
 assert crack_two_eggs == Diagram.decode(
     dom=egg @ egg, boxes_and_offsets=[
@@ -61,8 +61,8 @@ open_crack2 = Functor(
 
 crack2_then_beat = crack2 @ Id(sugar) >> Id(white) @ beat
 
-Equation(crack2_then_beat, open_crack2(crack2_then_beat),
-         symbol='$\\mapsto$').draw(figsize=(7, 3.5))
+# Equation(crack2_then_beat, open_crack2(crack2_then_beat),
+#          symbol='$\\mapsto$').draw(figsize=(7, 3.5))
 
 oeuf, blanc, jaune, sucre = Ty("oeuf"), Ty("blanc"), Ty("jaune"), Ty("sucre")
 
@@ -78,7 +78,7 @@ english2french = Functor(
     ar={crack: ouvrir,
         beat: battre})
 
-english2french(crack_then_beat).draw(figsize=(3, 2))
+# english2french(crack_then_beat).draw(figsize=(3, 2))
 
 echanger = lambda x, y: Box("échanger", x @ y, y @ x, draw_as_wires=True)
 melanger = lambda x: Box("mélanger", x @ x, x)
@@ -86,7 +86,7 @@ melanger = lambda x: Box("mélanger", x @ x, x)
 for x in [white, yolk]:
     english2french.ar[merge(x)] = melanger(english2french(x))
 
-english2french(open_crack2(crack2_then_beat)).draw(figsize=(4, 4))
+# english2french(open_crack2(crack2_then_beat)).draw(figsize=(4, 4))
 
 ## Tensor as boxes
 
