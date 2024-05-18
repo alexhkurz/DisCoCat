@@ -3,7 +3,12 @@
 from discopy.symmetric import Ty, Box, Id, Swap, Diagram, Functor
 from discopy.drawing import Equation
 from discopy.tensor import Dim, Tensor
+import numpy as np
 
+## Drawing cooking recipes
+## Drawing cooking recipes
+## Drawing cooking recipes
+## Drawing cooking recipes
 ## Drawing cooking recipes
 
 print(Ty('sentence', 'qubit'))
@@ -89,16 +94,60 @@ for x in [white, yolk]:
 # english2french(open_crack2(crack2_then_beat)).draw(figsize=(4, 4))
 
 ## Tensor as boxes
+## Tensor as boxes
+## Tensor as boxes
+## Tensor as boxes
+## Tensor as boxes
 
 matrix = Tensor([0, 1, 1, 0], Dim(2), Dim(2))
-
-print(matrix)
-
 matrix.array
 
 assert matrix >> Tensor.id(Dim(2)) == matrix == Tensor.id(Dim(2)) >> matrix
-
 vector = Tensor([0, 1], Dim(1), Dim(2))
-
 vector >> matrix
 
+assert Tensor.id(Dim(1)) @ matrix == matrix == matrix @ Tensor.id(Dim(1))
+Tensor.id(Dim(1))
+
+print(vector @ vector)
+print(vector @ matrix)
+
+assert np.all(
+    (matrix >> matrix).array == matrix.array.dot(matrix.array))
+assert np.all(
+    (matrix @ matrix).array == np.moveaxis(np.tensordot(
+    matrix.array, matrix.array, 0), range(4), [0, 2, 1, 3]))
+
+matrix = Tensor[complex]([0, -1j, 1j, 0], Dim(2), Dim(2))
+matrix >> matrix.dagger()
+
+vector1 = Tensor[complex]([-1j, 1j], Dim(1), Dim(2))
+vector.cast(complex) >> vector1.dagger()
+
+print(vector + vector)
+
+zero = Tensor.zero(Dim(1), Dim(2))
+assert vector + zero == vector == zero + vector
+
+swap = Tensor.swap(Dim(2), Dim(3))
+assert swap.dom == Dim(2) @ Dim(3) and swap.cod == Dim(3) @ Dim(2)
+assert swap >> swap.dagger() == Tensor.id(Dim(2, 3))
+assert swap.dagger() >> swap == Tensor.id(Dim(3, 2))
+matrix1 = Tensor(list(range(9)), Dim(3), Dim(3))
+assert vector @ matrix1 >> swap == matrix1 @ vector
+
+cup, cap = Tensor.cups(Dim(2), Dim(2)), Tensor.caps(Dim(2), Dim(2))
+print("cup == {}".format(cup))
+print("cap == {}".format(cap))
+
+_id = Tensor.id(Dim(2))
+assert cap @ _id >> _id @ cup == _id == _id @ cap >> cup @ _id
+
+print("\n    == ".join(map(str, (cap @ _id >> _id @ cup, _id, _id @ cap >> cup @ _id))))
+
+from discopy.tensor import Cup, Cap, Id
+
+left_snake = Cap(Dim(2), Dim(2)) @ Id(Dim(2)) >> Id(Dim(2)) @ Cup(Dim(2), Dim(2))
+right_snake = Id(Dim(2)) @ Cap(Dim(2), Dim(2)) >> Cup(Dim(2), Dim(2)) @ Id(Dim(2))
+
+Equation(left_snake, Id(Dim(2)), right_snake).draw(figsize=(5, 2), draw_type_labels=False)
