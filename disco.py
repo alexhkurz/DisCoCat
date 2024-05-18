@@ -1,4 +1,7 @@
-from discopy import Ty, Word, Cup, Cap, Diagram, Id, Functor
+try:
+    from discopy import Ty, Word, Cup, Cap, Diagram, Id, Functor
+except ImportError:
+    print("Cannot import 'Ty' from 'discopy'. Please check your installation.")
 from discopy.rigid import Functor
 
 s, n = Ty('s'), Ty('n')  # s for sentence, n for noun
