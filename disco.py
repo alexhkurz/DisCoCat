@@ -3,6 +3,7 @@ from discopy.cat import Category
 from discopy.tensor import Dim, Tensor
 from discopy import tensor
 from discopy.drawing import Equation
+from discopy.quantum import circuit, qubit, sqrt, X, Ket, H, CX
 
 n, s = Ty('n'), Ty('s')
 Alice = Word("Alice", n)
@@ -39,7 +40,6 @@ answer = Alice
 assert F(question) == F(answer)
 Equation(question, answer).draw(figsize=(6, 3))
 
-from discopy.quantum import circuit, qubit, sqrt, X, Ket, H
 F_ = circuit.Functor(
     ob={s: qubit ** 0, n: qubit ** 1},
     ar={Alice: Ket(0),
